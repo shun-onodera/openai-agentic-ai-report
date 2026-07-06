@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「The Shift to Agentic AI: Evidence from Codex」全文解説 | エージェント型AI利用実態レポート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0f1b2d;
+    --dark-blue:#1a2744;
+    --blue:#2d7ff9;
+    --cyan:#00d4aa;
+    --orange:#ff6b35;
+    --red:#e8384f;
+    --yellow:#f5a623;
+    --purple:#7c5cfc;
+    --bg-light:#f0f4f8;
+    --white:#ffffff;
+    --text:#1a2233;
+    --text-sub:#5a6478;
+    --border:#e2e8f0;
+    --radius-lg:16px;
+    --radius-sm:10px;
+    --shadow-sm:0 1px 3px rgba(15,27,45,0.08);
+    --shadow-md:0 4px 16px rgba(15,27,45,0.10);
+    --shadow-lg:0 8px 32px rgba(15,27,45,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Noto Sans JP',sans-serif;
+    background:var(--bg-light);
+    color:var(--text);
+    line-height:1.85;
+    font-weight:400;
+    overflow-x:hidden;
+    width:100%;
+  }
+  img,table,pre{max-width:100%;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--dark-blue) 60%,#213a63 100%);
+    color:var(--white);
+    padding:64px 0 48px;
+  }
+  .hero-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+  .hero-eyebrow{
+    display:inline-block;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    background:rgba(45,127,249,0.18);
+    color:#8fc0ff;
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:20px;
+    border:1px solid rgba(45,127,249,0.35);
+  }
+  .hero h1{
+    font-size:clamp(24px,4vw,36px);
+    font-weight:900;
+    line-height:1.5;
+    margin:0 0 12px;
+  }
+  .hero .subtitle{
+    font-size:16px;
+    color:#b9c6dc;
+    font-weight:400;
+    margin:0 0 28px;
+    max-width:820px;
+  }
+  .hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .hero-meta span{
+    font-size:13px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:var(--radius-sm);
+    padding:8px 14px;
+    color:#d6e0f0;
+  }
+
+  /* ---------- 示唆(結論) box ---------- */
+  .conclusion-box{
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-lg);
+    padding:32px;
+    margin:-40px auto 40px;
+    max-width:1200px;
+    border-top:6px solid var(--blue);
+  }
+  .conclusion-box .label{
+    font-size:13px;
+    font-weight:700;
+    color:var(--blue);
+    letter-spacing:0.04em;
+    margin-bottom:10px;
+  }
+  .conclusion-box p{
+    font-size:16px;
+    margin:0;
+    color:var(--text);
+  }
+  .conclusion-box strong{color:var(--dark-blue);}
+
+  /* ---------- Source box ---------- */
+  .source-box{
+    background:#eef1f6;
+    border-radius:var(--radius-sm);
+    padding:24px 28px;
+    margin:0 auto 48px;
+    max-width:1200px;
+    font-size:14px;
+    color:var(--text-sub);
+  }
+  .source-box h3{
+    margin:0 0 14px;
+    font-size:14px;
+    color:var(--text);
+    font-weight:700;
+  }
+  .source-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px 24px;
+  }
+  .source-grid dt{font-weight:700;color:var(--text);}
+  .source-grid dd{margin:2px 0 10px;}
+  .source-box a{color:var(--blue);word-break:break-all;}
+  .source-links{margin-top:12px;display:flex;flex-direction:column;gap:6px;}
+
+  /* ---------- Section wrapper ---------- */
+  section.content{max-width:1200px;margin:0 auto;padding:0 24px 8px;}
+
+  /* ---------- Metrics strip ---------- */
+  .metrics-strip{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:16px;
+    margin-bottom:56px;
+  }
+  .metric-card{
+    background:var(--white);
+    border-radius:var(--radius-sm);
+    box-shadow:var(--shadow-sm);
+    padding:20px 16px;
+    text-align:center;
+    border-bottom:4px solid var(--blue);
+  }
+  .metric-card .num{
+    font-size:26px;
+    font-weight:900;
+    color:var(--dark-blue);
+    line-height:1.2;
+  }
+  .metric-card .unit{font-size:13px;font-weight:700;color:var(--text-sub);}
+  .metric-card .desc{font-size:12px;color:var(--text-sub);margin-top:6px;line-height:1.5;}
+
+  /* ---------- Chapter divider ---------- */
+  .chapter-divider{
+    background:linear-gradient(120deg,var(--navy),var(--dark-blue));
+    color:var(--white);
+    border-radius:var(--radius-lg);
+    padding:26px 32px;
+    margin:56px 0 28px;
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    box-shadow:var(--shadow-md);
+  }
+  .chapter-divider .no{
+    font-size:34px;
+    font-weight:900;
+    color:var(--cyan);
+    line-height:1;
+  }
+  .chapter-divider h2{
+    font-size:20px;
+    font-weight:700;
+    margin:0;
+  }
+  .chapter-divider .en{
+    display:block;
+    font-size:12px;
+    color:#9fb3d1;
+    font-weight:400;
+    margin-top:4px;
+  }
+
+  h3.sub-head{
+    font-size:16px;
+    font-weight:700;
+    color:var(--dark-blue);
+    margin:32px 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--blue);
+  }
+
+  /* ---------- Research card ---------- */
+  .card{
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);
+    padding:28px;
+    margin-bottom:24px;
+  }
+  .card p{margin:0 0 14px;font-size:15px;}
+  .card p:last-child{margin-bottom:0;}
+  .card ul{margin:0 0 14px;padding-left:22px;font-size:15px;}
+  .card li{margin-bottom:8px;}
+  .card-title{
+    font-size:16px;
+    font-weight:700;
+    color:var(--dark-blue);
+    margin:0 0 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .card-title .tag{
+    font-size:11px;
+    font-weight:700;
+    background:var(--blue);
+    color:#fff;
+    padding:3px 10px;
+    border-radius:999px;
+  }
+
+  .panel{
+    border-radius:var(--radius-sm);
+    padding:18px 20px;
+    margin:16px 0;
+    font-size:14px;
+  }
+  .panel.overview{
+    background:linear-gradient(135deg,#eaf2ff,#f4f8ff);
+    border-left:4px solid var(--blue);
+  }
+  .panel.mechanism{
+    background:#fff8e6;
+    border-left:4px solid var(--yellow);
+  }
+  .panel.insight{
+    background:#e9f9f2;
+    border-left:4px solid var(--cyan);
+  }
+  .panel .panel-label{
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.02em;
+    margin-bottom:8px;
+    display:block;
+  }
+  .panel.overview .panel-label{color:var(--blue);}
+  .panel.mechanism .panel-label{color:#a9761a;}
+  .panel.insight .panel-label{color:#0a8f6e;}
+  .panel p,.panel ul{margin:0;font-size:14px;}
+  .panel ul{padding-left:20px;}
+
+  /* ---------- Bar chart (CSS only) ---------- */
+  .barchart{margin:20px 0;}
+  .barchart .bar-row{
+    display:grid;
+    grid-template-columns:150px 1fr 70px;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+    font-size:13px;
+  }
+  .barchart .bar-label{color:var(--text-sub);font-weight:500;}
+  .barchart .bar-track{
+    background:#e6ecf4;
+    border-radius:6px;
+    height:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .barchart .bar-fill{
+    height:100%;
+    border-radius:6px 0 0 6px;
+    display:flex;
+    align-items:center;
+  }
+  .barchart .bar-value{text-align:right;font-weight:700;color:var(--dark-blue);}
+  .barchart .axis0{
+    font-size:11px;color:var(--text-sub);margin-top:2px;grid-column:2/3;
+  }
+  .chart-caption{font-size:12px;color:var(--text-sub);margin-top:10px;}
+
+  /* stacked 100% bar for concurrency distribution */
+  .stackbar-wrap{margin:20px 0;}
+  .stackbar-row{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:12px;margin-bottom:14px;}
+  .stackbar-title{font-size:13px;font-weight:700;color:var(--text-sub);}
+  .stackbar{display:flex;height:30px;border-radius:6px;overflow:hidden;width:100%;}
+  .stackbar span{display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:10px;font-size:12px;color:var(--text-sub);}
+  .legend .dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle;}
+
+  /* comparison bars (before/after) */
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0;}
+  @media (max-width:640px){.compare-grid{grid-template-columns:1fr;}}
+  .compare-item{text-align:center;}
+  .compare-item .compare-label{font-size:13px;color:var(--text-sub);margin-bottom:8px;font-weight:700;}
+  .compare-bars{display:flex;align-items:flex-end;justify-content:center;gap:18px;height:150px;}
+  .compare-bar{width:56px;border-radius:6px 6px 0 0;position:relative;display:flex;align-items:flex-start;justify-content:center;}
+  .compare-bar .val{position:absolute;top:-24px;font-size:13px;font-weight:900;color:var(--dark-blue);}
+  .compare-bar .cap{position:absolute;bottom:-22px;font-size:11px;color:var(--text-sub);width:80px;left:50%;transform:translateX(-50%);text-align:center;}
+
+  /* table */
+  table.data-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+    margin:16px 0;
+  }
+  table.data-table caption{caption-side:top;text-align:left;font-size:13px;color:var(--text-sub);margin-bottom:8px;}
+  table.data-table th,table.data-table td{
+    border:1px solid var(--border);
+    padding:10px 12px;
+    text-align:left;
+  }
+  table.data-table th{
+    background:var(--dark-blue);
+    color:#fff;
+    font-weight:700;
+  }
+  table.data-table tr:nth-child(even) td{background:#f6f9fc;}
+  .table-scroll{overflow-x:auto;width:100%;-webkit-overflow-scrolling:touch;}
+
+  /* numbered framework list */
+  ol.framework{counter-reset:fw;list-style:none;padding:0;margin:16px 0;}
+  ol.framework li{
+    counter-increment:fw;
+    position:relative;
+    padding:14px 16px 14px 52px;
+    background:#f6f9fc;
+    border-radius:var(--radius-sm);
+    margin-bottom:10px;
+    font-size:14px;
+  }
+  ol.framework li::before{
+    content:counter(fw);
+    position:absolute;
+    left:14px;top:50%;transform:translateY(-50%);
+    width:26px;height:26px;border-radius:50%;
+    background:var(--blue);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:13px;
+  }
+  ol.framework li strong{color:var(--dark-blue);}
+
+  /* timeline */
+  .timeline{position:relative;margin:24px 0;padding-left:28px;}
+  .timeline::before{
+    content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border);
+  }
+  .timeline-item{position:relative;margin-bottom:22px;}
+  .timeline-item::before{
+    content:'';position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;
+    background:var(--blue);border:2px solid #fff;box-shadow:0 0 0 2px var(--blue);
+  }
+  .timeline-item .tdate{font-size:12px;font-weight:700;color:var(--blue);}
+  .timeline-item .ttext{font-size:14px;margin-top:2px;}
+
+  /* card grid for categories */
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0;}
+  .cat-item{
+    background:#f6f9fc;border-radius:var(--radius-sm);padding:14px 16px;font-size:13.5px;
+    border-left:3px solid var(--purple);
+  }
+  .cat-item strong{display:block;color:var(--dark-blue);margin-bottom:4px;font-size:14px;}
+
+  /* summary table section */
+  .summary-section{margin:64px 0;}
+  .summary-section h2{font-size:22px;font-weight:900;color:var(--dark-blue);margin-bottom:16px;}
+
+  footer{
+    background:var(--navy);
+    color:#9fb3d1;
+    padding:40px 0;
+    margin-top:64px;
+    font-size:13px;
+  }
+  footer .wrap{max-width:1200px;}
+  footer a{color:#8fc0ff;}
+  footer .foot-note{margin-top:16px;line-height:1.8;}
+
+  @media (max-width:900px){
+    .metrics-strip{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:640px){
+    .hero{padding:44px 0 36px;}
+    .conclusion-box{margin:-28px 16px 32px;padding:22px;}
+    .source-box{margin:0 16px 32px;padding:20px;}
+    section.content{padding:0 16px 8px;}
+    .metrics-strip{grid-template-columns:1fr 1fr;}
+    .barchart .bar-row{grid-template-columns:96px 1fr 56px;font-size:12px;}
+    .chapter-divider{padding:20px 20px;}
+    .card{padding:20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">一次資料解説 ／ HiPro中期事業計画FY26 関連リサーチ</span>
+    <h1>「The Shift to Agentic AI: Evidence from Codex」全文解説<br>エージェント型AI利用実態論文レポート</h1>
+    <p class="subtitle">OpenAIが自社データを用いて公開した、対話型AIからエージェント型AI（人に代わって作業を実行するAI）への移行実態に関する実証論文を、全セクション・全図表を漏れなく踏まえて日本語で解説する。</p>
+    <div class="hero-meta">
+      <span>発表日：2026年6月25日</span>
+      <span>出典：arXiv:2606.26959（経済学 econ.GN）</span>
+      <span>著者6名（OpenAI／コロンビア大学／ペンシルベニア大学ウォートン校／デューク大学）</span>
+      <span>収集日：2026年7月6日</span>
+    </div>
+  </div>
+</div>
+
+<div class="conclusion-box">
+  <div class="label">示唆（結論）</div>
+  <p>OpenAI自身が公開したエージェント型AIの利用実態データは、「対話して答えを得る」から「作業そのものを任せる」への転換が、<strong>社内（OpenAI）→取引先企業→個人利用者の順に速く進んでいる</strong>ことを実データで裏づけている。特にOpenAI社内では「1人が複数のAIエージェントを同時並行で監督・調整する働き方」が既に定着しつつあり（週内で5体以上のエージェントを同時稼働させた利用者が28.6%）、これは日本の副業・フリーランスマッチング市場における「個人が担う業務の単位」の変化を先取りする事例として参照価値が高い。HiPro中期事業計画の「AIによる業務再構成」という論点に対し、追跡すべき指標（並行実行数・タスクの複雑度・作業の定型化率）の具体例を与える一次資料である。</p>
+</div>
+
+<div class="source-box">
+  <h3>出典・原文情報</h3>
+  <dl class="source-grid">
+    <div>
+      <dt>タイトル</dt>
+      <dd>The Shift to Agentic AI: Evidence from Codex（エージェント型AIへの移行 ― Codexからの実証）</dd>
+    </div>
+    <div>
+      <dt>著者</dt>
+      <dd>Drew Johnston、David Holtz、Alex Martin Richmond、Christopher Ong、Prasanna Tambe、Aaron Chatterji</dd>
+    </div>
+    <div>
+      <dt>所属</dt>
+      <dd>OpenAI／コロンビア大学ビジネススクール／ペンシルベニア大学ウォートン校／デューク大学フュークア・スクール</dd>
+    </div>
+    <div>
+      <dt>発表</dt>
+      <dd>2026年6月25日、arXiv（経済学カテゴリ econ.GN）</dd>
+    </div>
+  </dl>
+  <div class="source-links">
+    <span>アブストラクトページ：<a href="https://arxiv.org/abs/2606.26959" target="_blank" rel="noopener">https://arxiv.org/abs/2606.26959</a></span>
+    <span>PDF：<a href="https://arxiv.org/pdf/2606.26959" target="_blank" rel="noopener">https://arxiv.org/pdf/2606.26959</a></span>
+    <span>HTML全文：<a href="https://arxiv.org/html/2606.26959v1" target="_blank" rel="noopener">https://arxiv.org/html/2606.26959v1</a></span>
+  </div>
+</div>
+
+<section class="content">
+
+  <!-- Metrics strip -->
+  <div class="metrics-strip">
+    <div class="metric-card">
+      <div class="num">5倍<span class="unit">超</span></div>
+      <div class="desc">2026年上半期のCodex週間アクティブ利用者数の増加倍率</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">99.8<span class="unit">%</span></div>
+      <div class="desc">OpenAI社内の出力トークンに占めるCodexの割合（2026年6月11日時点）</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">28.6<span class="unit">%</span></div>
+      <div class="desc">OpenAI社内で週内に5体以上のエージェントを同時稼働させた利用者の割合</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">70.2<span class="unit">%</span></div>
+      <div class="desc">1時間以上かかるタスクを依頼した個人利用者の割合（2026年5月）</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">26.6<span class="unit">%</span></div>
+      <div class="desc">全体のスキル（定型化）利用率（2026年6月11日、3月時点は5.4%）</div>
+    </div>
+  </div>
+
+  <!-- 全体像 -->
+  <div class="card">
+    <div class="card-title">全体像（アブストラクトの要点）<span class="tag">要旨</span></div>
+    <ul>
+      <li>Codexのアクティブ利用者数は2026年上半期で5倍以上に増加した。最も伸びが大きいのは、当初の中心層だったソフトウェア開発者以外の層である。</li>
+      <li>導入の進み方は場によって大きく異なる。OpenAI社内ではCodex利用がほぼ全員に行き渡り、業務でのChatGPT利用をほぼ置き換えた。社外でも同様の移行が見られるが、外部企業ではまだ導入度合いにばらつきが大きい。</li>
+      <li>利用の「高度化」も進んでいる。利用者の10%超が、週内のどこかの時点で3体以上のCodexエージェントを同時に動かしている。26.6%が「スキル」（複雑な作業手順を再利用可能な形で保存する仕組み）を利用している。</li>
+      <li>依頼するタスクの複雑さも増している。経験のある人間が完了に8時間以上かかると推定される作業を少なくとも1件依頼した個人利用者の割合は、年初以降約10倍に増加した。</li>
+      <li>出力量も急増している。2026年6月時点で、OpenAI社内の法務職従業員（中央値）はCodexとChatGPTを合わせた月間出力トークン数が2025年11月の13倍、研究職では50倍以上になった。</li>
+    </ul>
+    <div class="panel overview">
+      <span class="panel-label">調査概要</span>
+      <p>研究者はメッセージの中身を直接読まず、自動分類器（AIによる自動タグ付けの仕組み）を通じて匿名化・集計した指標だけを使う「プライバシー保護型のパイプライン」で分析している。比較対象は<strong>個人アカウント利用者</strong>（一般市場の初期採用実態）、<strong>法人アカウント利用者</strong>（OpenAI以外の企業の業務利用実態）、<strong>OpenAI社内従業員</strong>（最も先端的な利用実態）の3層。OpenAI社内は「最先端モデルに慣れている・利用コストが安い・組織の導入意欲が高い・研修や情報共有が盛ん」という特別に有利な環境にあり一般企業を代表しないが、導入障壁が下がった将来像を先取りするものと位置づけられている。</p>
+    </div>
+  </div>
+
+  <!-- Chapter 1 -->
+  <div class="chapter-divider">
+    <span class="no">01</span>
+    <div><h2>導入：エージェント型AIとは何か<span class="en">Introduction</span></h2></div>
+  </div>
+
+  <div class="card">
+    <p>生成AIは、ユーザーに代わってどこまで行動できるか（＝エージェント性）で性質が分かれてきている。従来のチャットボットは会話型で、質問すれば答えが返るだけだった。エージェント型AIはこれを拡張し、複数手順にまたがる作業を委任でき、外部ツールの利用・ファイルの確認・コマンドの実行・成果物の作成や修正まで自律的に行える。</p>
+    <p>Codex（OpenAIが提供する、人に代わってファイル操作・コマンド実行・成果物作成まで自律的に行うエージェント型のコーディング・業務支援ツール。2025年4月提供開始）はもともとソフトウェア開発向けに設計された。AIの出力が有用で経済的に重要であり、かつ比較的検証しやすい領域だからである。しかし実際の利用は開発業務を超えて広がっており、文書作成・データ分析・連絡調整など、非エンジニア職の知的業務にも及んでいる。</p>
+
+    <h3 class="sub-head">論文が示す4つの「定型化された事実」</h3>
+    <ol class="framework">
+      <li><strong>事実1：移行は急速だが、場によって不均一</strong>――2026年上半期を通じてCodexの週間アクティブ利用は急増したが、依然としてChatGPTほど広くは使われていない。移行度合いは個人利用者で最も小さく、法人利用者でより大きく、OpenAI社内従業員で最も大きい。2026年6月11日時点の出力トークンに占めるCodexの割合は、OpenAI社内99.8%・法人63.3%・個人16.5%。</li>
+      <li><strong>事実2：利用は「作業の委任」に強く寄っている</strong>――デバッグ・リファクタリング（コードの整理）・変更内容の検証・アプリの設定・文書作成・データ分析など、具体的な作業の実行をAIに依頼している。助言や情報提供を求める「相談」とは異なり、「作業そのものの実行」を求めるものと位置づけられる。</li>
+      <li><strong>事実3：ソフトウェア開発を軸としつつ、導入が深い場ほど裾野が広い</strong>――どの利用者層でもコードの実装・理解・検証、エンジニアリング運用、アプリ管理のタスクが最大の割合を占めるが、OpenAI社内では研究・企画・連絡調整・データ分析・製品業務・採用・営業など非エンジニア業務にまで広がっている。</li>
+      <li><strong>事実4：利用が濃い利用者ほど、大規模・反復的・並行的な作業の進め方をしている</strong>――出力量・タスクの複雑度・スキル利用の有無・稼働時間・同時実行数のいずれの指標でも、ヘビーユーザーは軽度利用者と質的に異なる。最も濃い利用者では、Codexは「質問に答えるアシスタント」ではなく、複数の作業の流れを委任・監視・レビュー・調整する「ワークフローシステム」に近づいている。</li>
+    </ol>
+  </div>
+
+  <!-- Chapter 2 -->
+  <div class="chapter-divider">
+    <span class="no">02</span>
+    <div><h2>関連研究<span class="en">Related literature</span></h2></div>
+  </div>
+
+  <div class="card">
+    <p>論文は既存研究を3系統に整理し、自らの位置づけを説明している。</p>
+    <h3 class="sub-head">1. 生成AIの普及・利用に関する研究</h3>
+    <p>職業ごとのLLM（大規模言語モデル）への影響度、労働者による生成AI導入、対話型AIの利用実態を扱った先行研究（Eloundou et al. 2024「GPTs are GPTs」、Felten et al. 2023、Bick・Blandin・Deming 2026、Handa et al. 2025によるAnthropic社のClaude利用実態調査、Chatterji et al. 2025「How people use ChatGPT」NBER論文＝本論文の著者の一人Chatterji氏が関わる姉妹研究）。本論文はこれをエージェント型AIに拡張し、分析単位を「1回の会話」から「委任された一連のワークフロー」に変えている点が新しい。</p>
+
+    <h3 class="sub-head">2. エージェント型AIに関する新興研究</h3>
+    <p>最も近い先行研究はPerplexity社のエージェント型製品を扱ったもの。Yang et al. 2025はブラウザ操作エージェントの初期利用が生産性・学習・買い物・メディア・キャリア・旅行など幅広い領域に及ぶことを示した。Yang et al. 2026はPerplexityの「Search」と、より自律性の高い「Computer」を比較し、自律性の高い製品ほど代行する作業量が多く、完了時間を短縮し、利用者が挑戦するタスクの範囲を広げることを示した。コーディングエージェントに関する研究では、Sarkar 2026がAI支援プログラミング基盤のデータから、エージェントがコード入力作業から「委任」へと業務をシフトさせていることを示し、Baumann et al. 2026は実際のオープンソース開発者によるコーディングエージェント利用データセット（SWE-chat）を公開し、実運用での利用がベンチマーク評価とは異なり、利用者による大幅な修正を伴う多様なものであることを示した。</p>
+
+    <h3 class="sub-head">3. 技術普及・組織的補完に関する研究</h3>
+    <p>新技術による生産性向上は、業務プロセス・従業員スキル・組織設計・無形資産への補完的投資に依存するという伝統的な知見を継承している。Brynjolfsson・Rock・Syverson 2019は、AIの急速な進歩と生産性統計の伸びの遅さとのギャップは、組織が補完的な革新を生み出すのに要する時間を反映していると論じた。Anthropic社のHitzig et al. 2026は、エージェント型システムが人とAIの関わり方を「支援」から「委任」へと移し、監督・検証・調整が価値創出の中心的な決定要因になり、専門知識に対するリターンが高まると論じている。Tambe 2026は、AI時代の労働力再教育において専門知識とアルゴリズムリテラシーの重要性を論じた。Demirer・Musolff・Yang 2026（NBER）は、タスク単位の大きな生産性向上が、下流の人間の作業がボトルネックとなって最終的な成果には不完全にしか反映されないことを示した。Demirer・Horton・Immorlica・Lucier・Shahidi 2026（NBER）は、AIが連続した一連の作業を実行できる場合に最大の生産性向上が生まれることを示し、ワークフローの構造やタスクの隣接性が自動化や職務再設計にとって重要だと論じた。Dillon・Jaffe・Immorlica・Stanton 2025（American Economic Review）は、メール・会議・文書作成向けの統合型生成AIツールを与えるフィールド実験を行い、個人レベルでの時間節約（特にメール対応）は見られたものの、業務の量や構成が変わった証拠は限定的だったと報告している。Chen・Stratton 2026は、生成AIの労働市場への影響が「自動化されやすい職種か」「AIとの協働が多い職種か」によって異なり、求人データを用いて、自動化されやすい職種では需要とスキル要件が減少する一方、AIとの協働が多い職種では需要とスキルの複雑さが増加することを示した。</p>
+
+    <div class="panel insight">
+      <span class="panel-label">論文の位置づけ</span>
+      <p>個人・法人・OpenAI社内という3つの利用者層の差異そのものが、「組織的補完」の重要性を裏づける証拠だと位置づけている。もしエージェントAIの普及がモデルの性能だけで決まるなら、同じモデルが使える場ではどこでも似た利用パターンになるはずである。実際にはグループ間で大きな差があることは、関連ファイルやシステムへのアクセス、経営層の期待、従業員のスキル、補完的なレビュー体制といった「文脈」に導入が左右されることを示している。</p>
+    </div>
+  </div>
+
+  <!-- Chapter 3 -->
+  <div class="chapter-divider">
+    <span class="no">03</span>
+    <div><h2>誰がエージェント型AIを使っているか<span class="en">Who Uses Agentic AI?</span></h2></div>
+  </div>
+
+  <div class="card">
+    <p>Codexの週間アクティブ利用者数は、2026年1月1日から6月1日の間に5倍以上に増加した。ただし利用者数だけでは「対話型からエージェント型への転換」の実態は捉えきれない。多くの利用者は依然としてChatGPTを使い続けており、Codexを導入した利用者は、対話型のみを使い続ける利用者に比べてはるかに集中的に使う傾向があるためである。そこで論文は、週間アクティブ利用者数を示したうえで、主にCodexとChatGPTを合わせた出力トークンに占めるCodexの割合に焦点を当てている。</p>
+
+    <h3 class="sub-head">図1：利用者層別の出力トークンシェア（2026年6月11日時点）</h3>
+    <div class="barchart">
+      <div class="bar-row">
+        <div class="bar-label">個人利用者</div>
+        <div class="bar-track"><div class="bar-fill" style="width:16.5%;background:var(--blue);"></div></div>
+        <div class="bar-value">16.5%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">法人利用者</div>
+        <div class="bar-track"><div class="bar-fill" style="width:63.3%;background:var(--blue);"></div></div>
+        <div class="bar-value">63.3%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">OpenAI社内</div>
+        <div class="bar-track"><div class="bar-fill" style="width:99.8%;background:var(--cyan);"></div></div>
+        <div class="bar-value">99.8%</div>
+      </div>
+      <div class="bar-row"><div></div><div class="axis0">0%</div><div></div></div>
+    </div>
+    <p class="chart-caption">出典：論文図1パネルB（原文本文の記述値）。原点0%からの棒グラフ。直近28日間でCodexを利用した個人アクティブ利用者は1%未満だが、導入者は極めて集中的に使うため出力トークンシェアは利用者数割合よりずっと大きい。法人利用者は直近28日間の17.3%がCodex利用。OpenAI社内はほぼ全アクティブ従業員が毎週Codexを利用している。</p>
+
+    <h3 class="sub-head">図2：ペルソナ別のアクティブ利用者数の伸び</h3>
+    <p>Codexの利用者を、直近のリクエスト内容から自動分類器で「開発者」「一般知識労働者」「個人利用」の3ペルソナに分類している（直近30日間で最も頻度の高いペルソナに割り当て、同数の場合は直近リクエストで判定）。開発者は典型的にコードの記述・レビュー・リファクタリングを行い、一般知識労働者は文書の作成・編集、表計算の分析、メモ作成、連絡調整などコーディング以外の業務を行い、個人利用は趣味・家計管理・学習などに使う層である。Codexの導入は当初の開発者層に限られておらず、非開発者層の伸びの方が速い。付録図A7では、OpenAI社内とは対照的に個人・法人の利用は依然として開発者ペルソナ（特にフルスタックエンジニアリング）に偏っていることが分かる。</p>
+
+    <h3 class="sub-head">図3：職種別の平均利用者のCodex利用割合（法人利用者、年初比）</h3>
+    <div class="compare-grid">
+      <div class="compare-item">
+        <div class="compare-label">エンジニア</div>
+        <div class="compare-bars">
+          <div class="compare-bar" style="height:16%;background:#c9dcfb;"><span class="val">約5%</span><span class="cap">年初</span></div>
+          <div class="compare-bar" style="height:80%;background:var(--blue);"><span class="val">26.8%</span><span class="cap">2026年6月</span></div>
+        </div>
+      </div>
+      <div class="compare-item">
+        <div class="compare-label">データ・アナリティクス職</div>
+        <div class="compare-bars">
+          <div class="compare-bar" style="height:12%;background:#c9dcfb;"><span class="val">数%</span><span class="cap">年初</span></div>
+          <div class="compare-bar" style="height:46%;background:var(--purple);"><span class="val">15.2%</span><span class="cap">2026年6月</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="chart-caption">出典：論文図3・本文記述。法人利用者の平均的なエンジニアが生成するトークンのうちCodex経由は26.8%（年初から5倍）。データ・アナリティクス職は約15.2%。法務チームでは平均的な利用者でわずか1.9%にとどまる。</p>
+
+    <div class="panel mechanism">
+      <span class="panel-label">なぜこの数字になるのか（メカニズム）</span>
+      <p>「平均的な利用者」で見た低い割合（法務1.9%等）は、主に「そもそもCodexを使う人が少ない」ことに起因する。実際にCodexを導入した利用者に絞ると利用強度はずっと高い。法人アカウントの平均的なエンジニアは26.8%だが、Codex利用エンジニアに限れば出力トークン全体の<strong>88.3%</strong>をCodexが占める。法務職も同様で、平均利用者では1.9%だがCodex利用者に限れば<strong>17.6%</strong>を占める。つまり「導入率の低さ」と「導入後の利用強度の高さ」が同時に存在している。</p>
+    </div>
+
+    <h3 class="sub-head">OpenAI社内の推移：法務・採用職における急拡大パターン</h3>
+    <div class="timeline">
+      <div class="timeline-item"><div class="tdate">2025年後半</div><div class="ttext">社内の利用パターンは今日の社外法人利用者と似た状況。エンジニアの利用シェアが最大、他職能は遅れる。</div></div>
+      <div class="timeline-item"><div class="tdate">2026年1月</div><div class="ttext">エンジニアリング職は既にAI利用の50%超をCodexに移行。一方、法務・採用職ではほぼゼロ。</div></div>
+      <div class="timeline-item"><div class="tdate">2026年3月</div><div class="ttext">平均的なエンジニアの利用の90%超がCodex経由に到達。</div></div>
+      <div class="timeline-item"><div class="tdate">2026年4月初旬</div><div class="ttext">法務・採用職はここまで緩やかに約20%へ増加。</div></div>
+      <div class="timeline-item"><div class="tdate">2026年4月〜5月（約1か月）</div><div class="ttext">法務・採用職が20%から75%へ急速に上昇。全社研修・定期フィードバックの取り組みと重なる時期。</div></div>
+      <div class="timeline-item"><div class="tdate">2026年現在</div><div class="ttext">ほぼ全ての部門で90%超に到達。「ほとんどの職能が対話型AI中心」から「Codexが職能を問わず主流」へ転換完了。</div></div>
+    </div>
+    <p class="chart-caption">出典：論文第3章本文の記述（図3関連の時系列説明）。数値は原文記載のまま。</p>
+
+    <h3 class="sub-head">図4：法人利用者のシニア度別のCodex利用割合</h3>
+    <p>法人利用者における導入は特定のシニア度に限られていない。Codexの出力トークンに占める割合は、シニア度の分布全体で上昇しており、若手・シニア層の双方に使われている。これは、Codexが個々の担当者による直接実装のためだけのツールではないことを意味する。シニア層は、タスクの委任や成果物の評価を伴う企画・レビュー業務のためにもエージェント型ツールを使っている可能性がある（詳細は第4章）。</p>
+  </div>
+
+  <!-- Chapter 4 -->
+  <div class="chapter-divider">
+    <span class="no">04</span>
+    <div><h2>エージェント型AIで人は何をしているか<span class="en">What kinds of work do people do with Agentic AI?</span></h2></div>
+  </div>
+
+  <div class="card">
+    <h3 class="sub-head">4.1 タスクの種類別シェア（図5）</h3>
+    <p>Codexへのリクエストを、固定の2階層タスク分類（タクソノミー）に基づいて分類している。分類器は、実行中に付随的に使われたツールではなく、利用者が求めた結果に基づいてタスクを分類する。上位カテゴリーには、コード実装・コード理解・コード検証・エンジニアリング運用・アプリ管理といったソフトウェア関連の作業に加え、データ分析・調査・ナレッジ成果物・連携業務・業務機能別ワークフローといった、より広い知的業務のカテゴリーが含まれる。</p>
+    <div class="cat-grid">
+      <div class="cat-item"><strong>コード実装／理解／検証</strong>全アカウント種別で最大割合。新規コード生成にとどまらず既存コードの理解・変更検証も含む</div>
+      <div class="cat-item"><strong>エンジニアリング運用</strong>OpenAI利用者でより多い活動。インフラに近い活動を示唆</div>
+      <div class="cat-item"><strong>アプリ管理</strong>Codex自体の設定・データ入力・ブラウザ操作</div>
+      <div class="cat-item"><strong>調査／業務機能別ワークフロー</strong>OpenAI利用者でより実験的・研究志向的な活動が多い</div>
+    </div>
+    <p>法人利用者はコーディング関連業務により集中しているのに対し、OpenAI利用者は調査・業務機能別ワークフロー・エンジニアリング運用でより多くの活動を示している。</p>
+
+    <h3 class="sub-head">4.2 Codexにおけるタスクの複雑さ（図6）</h3>
+    <p>各タスクカテゴリー内でも、依頼される内容の幅は広い。例えば「コード実装」カテゴリーには、1行の微修正から本格的なアプリケーションの新規開発まで含まれる。論文は、経験のある人間がAIの助けなしにそのタスクを完了するのに要する時間を推定するプロンプトを用いて、依頼内容の複雑さを定量化している。</p>
+
+    <div class="compare-grid">
+      <div class="compare-item">
+        <div class="compare-label">1時間以上かかるタスクを1件以上依頼した個人利用者の割合</div>
+        <div class="compare-bars">
+          <div class="compare-bar" style="height:47%;background:#c9dcfb;"><span class="val">35.4%</span><span class="cap">2025年12月</span></div>
+          <div class="compare-bar" style="height:94%;background:var(--blue);"><span class="val">70.2%</span><span class="cap">2026年5月</span></div>
+        </div>
+      </div>
+      <div class="compare-item">
+        <div class="compare-label">8時間以上かかるタスクを1件以上依頼した利用者の割合</div>
+        <div class="compare-bars">
+          <div class="compare-bar" style="height:8%;background:#fbdad0;"><span class="val">2.1%</span><span class="cap">2025年12月</span></div>
+          <div class="compare-bar" style="height:94%;background:var(--orange);"><span class="val">25.6%</span><span class="cap">2026年5月時点</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="chart-caption">出典：論文図6・本文記述。個人アカウント利用者のうちモデル訓練へのデータ利用に同意した0.1%のランダムサンプルに複雑度推定分類器を適用。原点0%からの棒グラフ。</p>
+
+    <div class="panel mechanism">
+      <span class="panel-label">補足知見</span>
+      <p>最も複雑な依頼は、1つのやり取り（スレッド）の最初のターンに集中する傾向がある。スレッドの最初のターンは、4番目のターンに比べて、経験のある人間で1時間以上かかる作業を要求している可能性が2倍以上高い。利用者はセッション最初に最も広範で複雑な作業をまとめて依頼し、その後のやり取りでより狭い範囲の微修正を行う傾向があることを示唆する。</p>
+    </div>
+
+    <h3 class="sub-head">4.3 労働者タイプ別のタスクシェア（図7・図8）</h3>
+    <p><strong>図7</strong>：OpenAI社内・社外法人のいずれでも、利用の大部分はエンジニアリング運用に集中している。OpenAI社内では開発職・非開発職を問わず、ナレッジ成果物の作成・連携業務・アプリ管理が共通のタスクとして見られる。法人利用者では、特に営業・マーケティング・採用の職能で、ナレッジ成果物の生成にエージェント型ツールを使う従業員が多い。</p>
+    <p><strong>図8</strong>：シニア度によってCodexの使われ方は明確に異なるが、「若手はコード生成、シニアは管理業務」という単純な図式では説明できない。法人利用者では、ほとんどのシニア度層でエンジニアリング運用が最大の割合を占めるが、コード実装は特に若手・契約社員層で顕著である。ナレッジ成果物の作成は役員・マネージャー層でより大きな割合を占めており、シニア層が技術文書などの成果物の作成・解釈・整理にもCodexを使っていることを示唆する。OpenAI社内ではばらつきがより大きく、一般担当者・シニア担当者はエンジニアリング運用に比較的多くのトークンを割く一方、マネージャー・役員は連携業務により多くを割いている。</p>
+  </div>
+
+  <!-- Chapter 5 -->
+  <div class="chapter-divider">
+    <span class="no">05</span>
+    <div><h2>人はエージェント型AIをどう使っているか<span class="en">How Are People Using Agentic AI?</span></h2></div>
+  </div>
+
+  <div class="card">
+    <div class="panel overview">
+      <span class="panel-label">歴史的な類推：電化の教訓</span>
+      <p>論文はDavid（1990）による有名な事例（蒸気機関から電力への移行）を引く。電化の初期、多くの工場は集中型の蒸気機関を集中型の電動モーターに置き換えただけで、工場のレイアウトや作業パターンは維持していた。より大きな生産性向上が生まれたのは、企業が電力の特性に合わせて生産方式そのものを再設計したとき（小型モーターによる動力の分散配置・工場フロアの再編）だった。この変化の普及には数十年を要した。技術普及の歴史を踏まえると、エージェント型AIの短期的な効果は、企業がまだ新しい生産プロセスを発見・導入・拡大できていない場合、長期的な生産性向上のポテンシャルを過小評価している可能性がある。ただし、エージェント型AIは労働者や組織が比較的低コストで新しい業務の進め方を試せる点で電化とは異なり、普及が過去の技術移行よりも速い可能性がある。</p>
+    </div>
+    <p>論文は、利用者が業務のやり方をエージェント型システムの特性に合わせて調整し始めているかを、①複数のエージェントを並行して動かしているか、②エージェントがより長いまとまった作業をこなしているか、③利用者がスキルやプラグインを通じて反復作業を定型化しているか、という3つの観点で検証している。</p>
+
+    <h3 class="sub-head">5.1 ターンの並行実行数（図9）</h3>
+    <p>Codexはスレッド型のやり取りの仕組みを採用しており、利用者は複数のエージェントを起動し、それぞれをほぼ独立した作業空間でやり取りできる。時間のかかるタスクではエージェントが数分から数時間単独で作業を続けるため、利用者は1つのタスクの完了を待たずに次のタスクを始められる。2026年6月11日までの1週間について、利用者ごとに異なるスレッドで重複実行したターン数を集計した結果は以下の通り。</p>
+
+    <div class="stackbar-wrap">
+      <div class="stackbar-row">
+        <div class="stackbar-title">個人利用者</div>
+        <div class="stackbar">
+          <span style="width:64%;background:var(--blue);">1：64%</span>
+          <span style="width:24%;background:var(--cyan);">2：24%</span>
+          <span style="width:12%;background:var(--purple);">3以上：12%</span>
+        </div>
+      </div>
+      <div class="stackbar-row">
+        <div class="stackbar-title">法人利用者</div>
+        <div class="stackbar">
+          <span style="width:67%;background:var(--blue);">1：67%</span>
+          <span style="width:24%;background:var(--cyan);">2：24%</span>
+          <span style="width:9%;background:var(--purple);">3以上：9%</span>
+        </div>
+      </div>
+      <div class="stackbar-row">
+        <div class="stackbar-title">OpenAI社内</div>
+        <div class="stackbar">
+          <span style="width:11%;background:var(--blue);">1：11%</span>
+          <span style="width:22%;background:var(--cyan);">2：22%</span>
+          <span style="width:22%;background:var(--purple);">3：22%</span>
+          <span style="width:16%;background:var(--orange);">4：16%</span>
+          <span style="width:21%;background:var(--yellow);">5〜9：21%</span>
+          <span style="width:8%;background:var(--red);">10以上：8%</span>
+        </div>
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--blue);"></span>並行1（並行なし）</span>
+      <span><span class="dot" style="background:var(--cyan);"></span>並行2</span>
+      <span><span class="dot" style="background:var(--purple);"></span>並行3</span>
+      <span><span class="dot" style="background:var(--orange);"></span>並行4</span>
+      <span><span class="dot" style="background:var(--yellow);"></span>並行5〜9</span>
+      <span><span class="dot" style="background:var(--red);"></span>並行10以上</span>
+    </div>
+    <p class="chart-caption">出典：論文図9・本文記述（内訳は原文添付図と同一の値。100%積み上げ横棒で表現）。法人利用者の約67.4%、個人利用者の約63.9%はこの期間中、並行ターンを一切使っていない。OpenAI利用者では単一ワークフローのみの利用者は10.7%にとどまり、約28.6%がどこかの時点で5体以上のエージェントを同時に稼働させていた。</p>
+
+    <div class="panel insight">
+      <span class="panel-label">示唆</span>
+      <p>OpenAI社内で観測される並行実行の広がりは、人間が複数のエージェントからなるチームを監督し、多数の同時進行の作業に業務を割り振るという働き方を表しており、大半の作業を人間自身が直接こなす社外の一般的な利用者の働き方とは根本的に異なる。この働き方には、比較的大規模なエージェント集団の管理・委任・レビューを行う能力が求められる。</p>
+    </div>
+
+    <h3 class="sub-head">5.2 長時間稼働するエージェント（図10）</h3>
+    <p>OpenAI社内で、1日のうちCodexのタスクがどれだけ稼働し続けているかを測定している。平均的な従業員では、エージェント型のワークフローは依然として断続的である。</p>
+    <div class="barchart">
+      <div class="bar-row">
+        <div class="bar-label">中央値の従業員</div>
+        <div class="bar-track"><div class="bar-fill" style="width:3.5%;background:var(--blue);"></div></div>
+        <div class="bar-value">2.5時間/日</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">上位1%の従業員</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--orange);"></div></div>
+        <div class="bar-value">約71時間/日</div>
+      </div>
+      <div class="bar-row"><div></div><div class="axis0">0時間</div><div></div></div>
+    </div>
+    <p class="chart-caption">出典：論文図10・本文記述（2026年6月11日時点）。上位1%の「1日あたり約71時間分」は複数エージェントの同時稼働を意味する（暦時間ではなく延べ稼働時間）。原点0からの棒グラフ。上位1%層の1日あたり累積稼働時間は、2026年4月7日以降で約88%増加した。</p>
+    <p>OpenAI社外では、1日あたりの累積稼働時間は依然としてかなり低く、中央値の利用者は断続的にしかCodexを使っていない。それでも観測期間中、利用分布の上位1%では法人利用者で約25%、個人利用者で約50%、1日あたりの稼働時間が増加した。中央値と上位層の対比は、典型的な利用者にとってエージェント型ワークフローは依然として散発的である一方、一部の高強度利用者層がCodexに委任する作業量を急速に拡大していることを示している。</p>
+
+    <h3 class="sub-head">5.3 エージェント業務の定型化（図11）</h3>
+    <p>最後の観点は、委任されたワークフローが単発のやり取りにとどまるか、再利用可能な定型業務になるかである。Codexは、ワークフローや手順の好みをコード化（保存・再利用可能な形に）し、同様の作業を繰り返し委任できる「スキル」機能を備えている。論文はこの「その場限りの利用」から「再利用可能なワークフロー基盤」への移行を、エージェント業務の「定型化」と呼んでいる。</p>
+
+    <h4 style="font-size:14px;font-weight:700;color:var(--dark-blue);margin:20px 0 10px;">スキルの出所（5分類）</h4>
+    <div class="cat-grid">
+      <div class="cat-item"><strong>プリインストール型</strong>画像生成など、Codexに標準で組み込まれた再利用可能な機能</div>
+      <div class="cat-item"><strong>キュレーション型</strong>PDF処理など、OpenAIが配布する独立したスキル</div>
+      <div class="cat-item"><strong>プラグイン型</strong>Googleドライブの文書ワークフローなど、他のスキル／ソフトと一緒に組み込まれたもの</div>
+      <div class="cat-item"><strong>カスタムプラグイン型</strong>認識されたプラグインに関連するが、キュレーション済み一覧には該当しないもの</div>
+      <div class="cat-item"><strong>カスタム型</strong>チーム独自のデータ可視化ガイドライン・独自の調査ワークフローなど、OpenAI非配布の独立スキル</div>
+    </div>
+
+    <h3 class="sub-head">スキル利用率の推移（アカウント種別、2026年3月1日→6月11日）</h3>
+    <div class="barchart">
+      <div class="bar-row">
+        <div class="bar-label">個人利用者</div>
+        <div class="bar-track"><div class="bar-fill" style="width:25.7%;background:var(--blue);"></div></div>
+        <div class="bar-value">25.7%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">法人利用者</div>
+        <div class="bar-track"><div class="bar-fill" style="width:30.4%;background:var(--blue);"></div></div>
+        <div class="bar-value">30.4%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">OpenAI社内</div>
+        <div class="bar-track"><div class="bar-fill" style="width:96.2%;background:var(--cyan);"></div></div>
+        <div class="bar-value">96.2%</div>
+      </div>
+      <div class="bar-row"><div></div><div class="axis0">0%（直近7日間・2026年6月11日時点）</div><div></div></div>
+    </div>
+    <div class="compare-grid" style="margin-top:24px;">
+      <div class="compare-item">
+        <div class="compare-label">全体のスキル利用率の推移</div>
+        <div class="compare-bars">
+          <div class="compare-bar" style="height:11%;background:#c9dcfb;"><span class="val">5.4%</span><span class="cap">2026年3月1日</span></div>
+          <div class="compare-bar" style="height:53%;background:var(--cyan);"><span class="val">26.6%</span><span class="cap">2026年6月11日</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="chart-caption">出典：論文図11・本文記述。原点0%からの棒グラフ。</p>
+
+    <div class="panel mechanism">
+      <span class="panel-label">なぜアカウント種別で差が出るのか</span>
+      <p>スキル利用の伸びは、特にプラグイン型とカスタム型によってもたらされている。プラグインは文書・表計算・スライド資料といった反復的なタスク領域にCodexの汎用機能を拡張するもの。カスタムスキルは、チームの文章作成基準・定型レポート・組織固有のワークフロー・利用者固有の好みといった、より個別性の高い手順的文脈をコード化するもので、プラグイン型・カスタム型の利用はOpenAI利用者で最も高く、法人利用者は個人利用者より大幅に高い。カスタムスキルは反復タスクが組織固有の文脈・共有の慣行・社内手順・チームレベルの基準に依存する場合に特に価値が高く、そうした条件は個人利用よりも法人での利用で一般的である。</p>
+    </div>
+  </div>
+
+  <!-- Chapter 6 -->
+  <div class="chapter-divider">
+    <span class="no">06</span>
+    <div><h2>結論<span class="en">Conclusion</span></h2></div>
+  </div>
+
+  <div class="card">
+    <p>論文は、エージェント型AIが職場における独自の技術として台頭していることを示している。従来の多くの研究はAIを情報提供・助言・コンテンツ生成のツールとして扱い、主なやり取りは対話型だった。エージェント型システムは異なる利用形態をもたらす。単に情報を求めるのではなく、利用者は成果物の作成・システムの変更・ワークフローの実行という「作業」を委任するようになっている。この転換は、アクティブ利用者数やチャット数、メッセージ量といった従来のAI利用指標が、エージェント型システムの普及とともに情報価値を失っていく可能性を示唆する。今後の分析では、委任されたタスクの複雑さ・稼働時間・ワークフローの再利用・並行実行数・生産される成果物の量を追跡する必要があるかもしれない。</p>
+    <p>論文の示す証拠は、エージェント型AIの普及が単に「どのAIツールを使うか」の変化ではなく、「AIを中心にどう業務を組み立てるか」の変化であることを示している。初期の利用は質問・文章の下書き・コード生成のやり取りといった、なじみのある対話型支援に近い。よりエージェント的な利用は、タスクの割り当て・成果物のレビュー・複数の作業の流れの調整・コード化されたワークフローの再利用を伴う。集中的な利用者は、複数のエージェント業務からなる「ポートフォリオ」を管理しているように見え、自らの役割も委任・監督・統合へとシフトしている。</p>
+    <p>ソフトウェア開発はこの変化の最前線にある。ソフトウェア業務はデジタルで、検証可能な成果物を生み、多くのモジュール化されたサブタスクを含むという性質を持つため、依然としてエージェント型AIツールの最も一般的な利用領域である。同時に、実際の利用はコード生成の枠を超え、システムの理解・デバッグ・検証・文書化・環境設定・運用業務も委任されている。</p>
+
+    <h3 class="sub-head">図12：産出量の急増（2025年11月1日〜2026年6月11日）</h3>
+    <div class="compare-grid">
+      <div class="compare-item">
+        <div class="compare-label">OpenAI社内・法務職（中央値）月間出力トークン数</div>
+        <div class="compare-bars">
+          <div class="compare-bar" style="height:8%;background:#c9dcfb;"><span class="val">1倍</span><span class="cap">2025年11月＝基準</span></div>
+          <div class="compare-bar" style="height:100%;background:var(--purple);"><span class="val">13倍</span><span class="cap">2026年6月</span></div>
+        </div>
+      </div>
+      <div class="compare-item">
+        <div class="compare-label">OpenAI社内・研究職（中央値）月間出力トークン数</div>
+        <div class="compare-bars">
+          <div class="compare-bar" style="height:2%;background:#c9dcfb;"><span class="val">1倍</span><span class="cap">2025年11月＝基準</span></div>
+          <div class="compare-bar" style="height:100%;background:var(--red);"><span class="val">50倍超</span><span class="cap">2026年6月</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="chart-caption">出典：論文図12・アブストラクト。2025年11月1日から2026年6月11日にかけて、中央値の従業員の出力トークン数はあらゆる職能で少なくとも10倍に増加した。原点0からの倍率比較。</p>
+
+    <div class="panel insight">
+      <span class="panel-label">組織への含意</span>
+      <p>AIの利用が相談から委任へとシフトするにつれ、組織は業務の割り当て・レビュー・調整の方法を見直す必要があるかもしれない。エージェント型システムはより大規模で反復的・モジュール的な業務単位をオフロード（外部化）することを可能にし、一部の定型実行業務の重要性を下げる一方で、判断力・監督・調整・レビューの重要性を高める可能性がある。職務は、各構成タスクを直接実行することから、AIエージェントの成果物を指示・監視・統合することへとシフトしていくかもしれない。組織はまた、個々の労働者が複数の作業の流れを同時に管理できるよう、並行化されたエージェント労働力を中心にワークフローを再設計するかもしれない。これらの変化は、チーム構成・採用ニーズ・キャリアラダー・スキルレベル間での業務の分配に影響を与えうる。</p>
+    </div>
+    <p>総じて、エージェント型AIは単に「より高性能な対話型AI」ではないことを、証拠は示している。対話型システムは主に利用者との情報交換に使われるのに対し、エージェント型システムはますます利用者に代わって作業を実行するために使われている。最も集中的な利用者は、単にチャットの頻度を増やしているのではない。タスクを委任し、作業を並行して実行し、コード化されたワークフローを再利用し、自らの労力を監督・統合へとシフトさせている。したがってAI導入の最先端は、「システムに答えを求める」ことから「行動するシステムを管理する」ことへと移行しつつある。</p>
+  </div>
+
+  <!-- 付録 -->
+  <div class="chapter-divider">
+    <span class="no">付録</span>
+    <div><h2>付録の要点<span class="en">Appendix Summary</span></h2></div>
+  </div>
+
+  <div class="card">
+    <h3 class="sub-head">付録A：追加図表</h3>
+    <p>人事管理職ステータス別のCodex利用割合、第2階層タスクカテゴリー別の利用者割合・平均利用者のタスク構成、ペルソナ別のタスク構成、アカウント種別ごとの詳細なペルソナ内訳、タスク領域別のスキル利用など、本文の図をより細かい粒度で補完する図が8点収録されている。</p>
+
+    <h3 class="sub-head">付録B：追加のタスク利用指標と第2階層タスク</h3>
+    <p>本文の図5は「利用者ごとの平均」で集計しているが、付録では「そのカテゴリーを一度でも使った利用者の割合」（利用の広がりを示す指標）と、より詳細な第2階層タスク分類（デバッグ・環境設定・文書化・企画・リポジトリ管理・データ分析・調査など）も示している。コードに関する質問・環境設定・文書化・リポジトリ管理・コード設定・バグ修正は、どのアカウント種別でも広く使われる第2階層タスクであり、Codexが単なるコード生成インターフェースではなく、汎用的な技術アシスタントとして使われていることを裏づけている。OpenAI利用者はウェブ検索・調査志向の業務・社内ナレッジ・アプリ管理などのカテゴリーでより多く見られ、法人利用者はコードQ&A・コード実装・リポジトリ管理・コード設定・環境設定など、直接的なコード関連カテゴリーでより多く見られる。</p>
+
+    <h3 class="sub-head">付録C：職位分類の手法</h3>
+    <p>法人利用者の職位を分類するために、推論の負荷を最小限に抑えたgpt-5-miniモデルを使用している。分類器は職位名のみを入力とし、推定される部門・シニア度・マネージャー該当性・整理された職種クラスを構造化された形式で出力する。部門は「財務市場・コーポレートファイナンス」「営業」「マーケティング」「データサイエンス」「事業運営」「エンジニアリング」「デザイン」「カスタマーサポート」「法務」「プロダクトマネジメント」「プロジェクトマネジメント」「医療・ライフサイエンス」「教育」「政策」「セキュリティ」「人事・採用」「IT」「パートナーシップ」「広報」「研究」「その他・不明」の20分類、シニア度は「学生・研修生」から「経営層・創業者」までの9段階、マネージャー該当性は4段階で判定される。個人が特定されるリスクを抑えるため、2社以上の外部企業（またはOpenAI社内）で観測された職位名のみを表示し、それ未満のものは伏せ字にする方式を採っている。</p>
+
+    <h3 class="sub-head">付録D：ペルソナ分類プロンプト</h3>
+    <p>利用者のペルソナを判定する分類プロンプトの分類体系。「開発者」は12種類のサブタイプ（フロントエンド・バックエンド・フルスタック・モバイル・データ・機械学習・研究エンジニア・システム基盤・DevOps・セキュリティ・エンジニアリング管理職・その他）、「一般知識労働者」は15種類（マーケティング・営業・法務・財務・データ分析・事業運営・プロダクト/プロジェクト管理・デザイン/リサーチ・ライティング・人事採用・事務/管理・教育/学生/学術・コンサルティング/戦略・医療/ライフサイエンス・不動産/建設・その他専門職）、「個人利用」は11種類（旅行・家事/事務・家計管理・健康/フィットネス・買い物・娯楽・趣味/創作・人間関係/連絡・自己学習・地域生活・その他個人利用）に分けられている。</p>
+
+    <h3 class="sub-head">付録E：タスク分類プロンプト</h3>
+    <p>全てのタスク分類に使われた詳細なタクソノミー。大分類は「コード理解」（コードQ&A・企画）、「コード実装」（バックエンド機能・フロントエンド画面・アプリのプロトタイプ・ゲーム開発・リファクタリング・バグ修正）、「コード検証」（コードレビュー・セキュリティ監査・テスト）、「エンジニアリング運用」（リポジトリ管理・ビルド/リリースパイプライン・環境設定・ジョブ管理・本番監視/調査）、「データ分析」（データ照会・データ解釈・データ処理・データラベリング）、「調査」（社内ナレッジ・市場/競合動向・金融市場/トレーディング・ウェブ検索）、「ナレッジ成果物」（文書・プレゼンテーション・表計算・マルチメディア素材・PDF）、「連携業務」（メッセージ作成・メッセージ要約・スケジュール調整・タスク管理・会議支援）、「業務機能別ワークフロー」（財務会計・営業・マーケティング/広報・プロダクト/デザイン・カスタマーサポート・採用/人事・法務/コンプライアンス）、「アプリ管理」（Codex自体の設定・データ入力・ブラウザ操作）の10分野、計40超の細分類からなる。</p>
+
+    <h3 class="sub-head">付録F：依頼複雑度の推定プロンプト</h3>
+    <p>gpt-5-miniモデルを用いて、Codexが行った作業を、AIなしで経験のある人間が完了するのに要する作業時間（分単位）として推定するプロンプトを使用している。このモデルの精度を検証するため、競技プログラミングサイトCodeforcesの問題1,000件をランダムに抽出し、モデルによる推定所要時間と、（1）各問題の難易度スコア、（2）最速の人間解答者上位5名の平均解答時間、との相関を検証した。その結果、モデル推定と上位5名の平均解答時間との相関は0.65、モデル推定と難易度スコアとの相関は0.69と、いずれも強い正の相関が確認された。モデルは総じて、メタデータ由来のスコアよりも遅い完了時間を予測する傾向があったが、これは比較対象が競技プログラマーという非ランダムに選ばれた集団であることが一因と考えられるとしている。この検証結果は、用いたプロンプトとモデルが、単純なタスクと複雑なタスクを区別できることを示していると論文は結論づけている。</p>
+  </div>
+
+  <!-- 総括テーブル -->
+  <div class="summary-section">
+    <h2>総括：全データポイント一覧</h2>
+    <div class="card">
+      <div class="table-scroll">
+        <table class="data-table">
+          <caption>論文本文に記載された主要な定量知見の総括。すべて原文（arXiv:2606.26959）記載の値。</caption>
+          <thead>
+            <tr><th>指標</th><th>数値</th><th>時点／対象</th><th>出所</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Codex週間アクティブ利用者数の増加倍率</td><td>5倍超</td><td>2026年1月1日〜6月1日</td><td>第3章・アブストラクト</td></tr>
+            <tr><td>出力トークンシェア（個人）</td><td>16.5%</td><td>2026年6月11日時点</td><td>図1</td></tr>
+            <tr><td>出力トークンシェア（法人）</td><td>63.3%</td><td>2026年6月11日時点</td><td>図1</td></tr>
+            <tr><td>出力トークンシェア（OpenAI社内）</td><td>99.8%</td><td>2026年6月11日時点</td><td>図1・事実1</td></tr>
+            <tr><td>直近28日Codex利用率（個人）</td><td>1%未満</td><td>2026年6月時点</td><td>図1</td></tr>
+            <tr><td>直近28日Codex利用率（法人）</td><td>17.3%</td><td>2026年6月時点</td><td>図1</td></tr>
+            <tr><td>平均的エンジニアのCodexシェア（法人）</td><td>26.8%（年初比5倍）</td><td>2026年6月時点</td><td>図3</td></tr>
+            <tr><td>平均的データ分析職のCodexシェア（法人）</td><td>約15.2%</td><td>2026年6月時点</td><td>図3</td></tr>
+            <tr><td>平均的法務職のCodexシェア（法人）</td><td>1.9%</td><td>2026年6月時点</td><td>図3</td></tr>
+            <tr><td>Codex利用エンジニア限定のシェア（法人）</td><td>88.3%</td><td>2026年6月時点</td><td>第3章本文</td></tr>
+            <tr><td>Codex利用法務職限定のシェア（法人）</td><td>17.6%</td><td>2026年6月時点</td><td>第3章本文</td></tr>
+            <tr><td>OpenAI社内エンジニアのCodexシェア</td><td>90%超</td><td>2026年3月</td><td>第3章本文</td></tr>
+            <tr><td>OpenAI社内法務・採用職のCodexシェア</td><td>ほぼ0%→約20%→75%</td><td>2026年1月→4月初旬→約1か月後</td><td>第3章本文</td></tr>
+            <tr><td>1時間以上タスク依頼者割合（個人）</td><td>35.4%→70.2%</td><td>2025年12月→2026年5月</td><td>図6</td></tr>
+            <tr><td>8時間以上タスク依頼者割合（個人）</td><td>2.1%→25.6%</td><td>2025年12月〜2026年5月</td><td>図6・アブストラクト</td></tr>
+            <tr><td>並行ターン未使用の割合（法人）</td><td>約67.4%</td><td>2026年6月11日までの1週間</td><td>図9</td></tr>
+            <tr><td>並行ターン未使用の割合（個人）</td><td>約63.9%</td><td>2026年6月11日までの1週間</td><td>図9</td></tr>
+            <tr><td>単一ワークフローのみの割合（OpenAI社内）</td><td>10.7%</td><td>2026年6月11日までの1週間</td><td>図9</td></tr>
+            <tr><td>5体以上同時稼働の割合（OpenAI社内）</td><td>28.6%</td><td>2026年6月11日までの1週間</td><td>図9・アブストラクト</td></tr>
+            <tr><td>1日あたり累積稼働時間（中央値、OpenAI社内）</td><td>2.5時間</td><td>2026年6月11日時点</td><td>図10</td></tr>
+            <tr><td>1日あたり累積稼働時間（上位1%、OpenAI社内）</td><td>約71時間</td><td>2026年6月11日時点</td><td>図10</td></tr>
+            <tr><td>上位1%の稼働時間増加率（OpenAI社内）</td><td>約88%増</td><td>2026年4月7日以降</td><td>図10</td></tr>
+            <tr><td>上位1%の稼働時間増加率（法人）</td><td>約25%増</td><td>観測期間中</td><td>第5章本文</td></tr>
+            <tr><td>上位1%の稼働時間増加率（個人）</td><td>約50%増</td><td>観測期間中</td><td>第5章本文</td></tr>
+            <tr><td>スキル利用率（個人）</td><td>25.7%</td><td>2026年6月11日までの7日間</td><td>図11</td></tr>
+            <tr><td>スキル利用率（法人）</td><td>30.4%</td><td>2026年6月11日までの7日間</td><td>図11</td></tr>
+            <tr><td>スキル利用率（OpenAI社内）</td><td>96.2%</td><td>2026年6月11日までの7日間</td><td>図11</td></tr>
+            <tr><td>全体のスキル利用率</td><td>5.4%→26.6%</td><td>2026年3月1日→6月11日</td><td>図11</td></tr>
+            <tr><td>法務職の月間出力トークン倍率</td><td>13倍</td><td>2025年11月→2026年6月</td><td>アブストラクト・図12</td></tr>
+            <tr><td>研究職の月間出力トークン倍率</td><td>50倍超</td><td>2025年11月→2026年6月</td><td>アブストラクト・図12</td></tr>
+            <tr><td>全職能の出力トークン最低増加倍率（OpenAI社内）</td><td>10倍以上</td><td>2025年11月1日〜2026年6月11日</td><td>第6章本文</td></tr>
+            <tr><td>複雑度推定モデルと人間解答時間の相関</td><td>0.65</td><td>Codeforces問題1,000件の検証</td><td>付録F</td></tr>
+            <tr><td>複雑度推定モデルと難易度スコアの相関</td><td>0.69</td><td>Codeforces問題1,000件の検証</td><td>付録F</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 参考文献 -->
+  <div class="summary-section">
+    <h2>主要参考文献</h2>
+    <div class="card">
+      <p style="font-size:13.5px;color:var(--text-sub);margin-bottom:16px;">原文引用のうち特に関連性が高いもの。全18件の参考文献は原文 <a href="https://arxiv.org/html/2606.26959v1" target="_blank" rel="noopener" style="color:var(--blue);">https://arxiv.org/html/2606.26959v1</a> の末尾に記載。</p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr><th>著者・年</th><th>タイトル</th><th>出典</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Chatterji, Cunningham, Deming, Hitzig, Ong, Shan, Wadman（2025）</td><td>How people use ChatGPT</td><td>NBER Working Paper No. 34255（本論文著者の一人が関わる姉妹研究）</td></tr>
+            <tr><td>Eloundou, Manning, Mishkin, Rock（2024）</td><td>GPTs are GPTs: Labor market impact potential of LLMs</td><td>Science, 384(6702), 1306–1308</td></tr>
+            <tr><td>Handa et al.（2025）</td><td>Which economic tasks are performed with AI? Evidence from millions of Claude conversations</td><td>arXiv:2503.04761（Anthropic社によるClaude利用実態調査）</td></tr>
+            <tr><td>Hitzig, Massenkoff, Lyubich, Heller, McCrory（2026）</td><td>Agentic coding and persistent returns to expertise</td><td>Anthropic Research Report</td></tr>
+            <tr><td>Yang et al.（2025）</td><td>The adoption and usage of AI agents: Early evidence from Perplexity</td><td>arXiv:2512.07828</td></tr>
+            <tr><td>Yang et al.（2026）</td><td>How AI agents reshape knowledge work: Autonomy, efficiency, and scope</td><td>arXiv:2606.07489</td></tr>
+            <tr><td>David, P. A.（1990）</td><td>The dynamo and the computer: An historical perspective on the modern productivity paradox</td><td>American Economic Review, 80(2), 355–361</td></tr>
+            <tr><td>Brynjolfsson, Rock, Syverson（2019）</td><td>Artificial intelligence and the modern productivity paradox</td><td>In The Economics of Artificial Intelligence</td></tr>
+            <tr><td>Dillon, Jaffe, Immorlica, Stanton（2025）</td><td>Shifting work patterns with generative AI</td><td>American Economic Review: Insights（forthcoming）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- HiPro示唆 -->
+  <div class="chapter-divider">
+    <span class="no">★</span>
+    <div><h2>HiPro中期事業計画への示唆<span class="en">Implications</span></h2></div>
+  </div>
+
+  <div class="card">
+    <ol class="framework">
+      <li><strong>追跡すべき指標の具体例が得られた</strong>――「並行実行数」「タスクの推定所要時間」「スキル・定型化率」「稼働時間」という4指標は、外部環境ダッシュボードやAI業界インパクト分析で追跡している「業務の再構成」を定量的に捉える具体的な物差しとして流用できる。</li>
+      <li><strong>導入曲線の先行指標</strong>――OpenAI社内の推移（2025年12月ほぼゼロ→2026年4月に急上昇）は、法人・個人向けサービスでも同様の急変が今後起こりうることを示唆する。特に非技術職（法務・採用等）で「導入までは緩やかだが、一定の閾値を超えると数か月で急拡大する」という非線形なパターンが観測された点は、需要予測の設計に反映する価値がある。</li>
+      <li><strong>「委任」への転換は職務内容そのものを変える</strong>――シニア層ほど「連携業務」「ナレッジ成果物」への配分が増えるという知見は、プロ人材の提案軸を「実行力」から「AIエージェントの監督・統合力」へ広げる論点と接続する。</li>
+    </ol>
+  </div>
+
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>「The Shift to Agentic AI: Evidence from Codex」全文解説レポート</div>
+    <div class="foot-note">
+      原文：Johnston, D., Holtz, D., Richmond, A. M., Ong, C., Tambe, P., &amp; Chatterji, A. (2026). <em>The Shift to Agentic AI: Evidence from Codex</em>. arXiv:2606.26959.<br>
+      本レポートは原文の逐語訳ではなく、全セクション・全図表・全データを踏まえて日本語で再構成した解説である。数値は原文記載の値をそのまま引用している。<br>
+      原文リンク：<a href="https://arxiv.org/abs/2606.26959" target="_blank" rel="noopener">arXiv:2606.26959（アブストラクト）</a>　｜　<a href="https://arxiv.org/pdf/2606.26959" target="_blank" rel="noopener">PDF</a>　｜　<a href="https://arxiv.org/html/2606.26959v1" target="_blank" rel="noopener">HTML全文</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
